@@ -1,0 +1,264 @@
+from turtle import*
+from tkinter import*
+from tkinter import messagebox
+from random import randint
+from time import*
+from tkinter import ttk
+
+speed(0)
+
+hideturtle()
+
+bgcolor("green")
+
+title("Turtle Race")
+
+penup()
+
+bgpic("/storage/emulated/0/pixelLab/20220317_121454.png")
+
+img=PhotoImage(file="/storage/emulated/0/Download/IMG_20220318_135139.png")
+
+label=Label(text="TURTLE RACE",font=("bold",24,"bold"),fg="yellow",bg="black")
+
+label.place(x=60,y=320)
+
+def HTP_game():
+	messagebox.showinfo("How To Play","1. Press start button.\n2. Wait for some seconds till all turtles \nreach at their position.\n3. When all turtle reach at their position \nrace get start at that time 3 \nbutton appears to move your turtle\n click on up button rapidly.\n4. To restart a reset button is present.\n5. To quit game exit button is present.")
+	
+def about_game():
+	messagebox.showinfo("About","   TURTLE RACE\n\n       Developed By\nHarsh Singh Sikarwar")
+	
+htp=Button(text="HOW TO PLAY",font=("bold",15,"bold"),fg="yellow",bg="black",command=HTP_game)
+
+htp.place(x=150,y=550)
+
+about=Button(text="ABOUT",font=("bold",15,"bold"),fg="yellow",bg="black",command=about_game)
+
+about.place(x=240,y=650)
+
+def start_game():
+	start_menu.destroy()
+	label.destroy()
+	htp.destroy()
+	about.destroy()
+	#first line
+	penup()
+	pensize(12)
+	pencolor("white")
+	left(360)
+	forward(150)
+	left(270)
+	pendown()
+	forward(650)
+	penup()
+	backward(650)
+	pendown()
+	backward(650)
+	penup()
+	home()
+	
+	#second line
+	penup()
+	left(180)
+	forward(150)
+	left(270)
+	pendown()
+	forward(650)
+	penup()
+	backward(650)
+	pendown()
+	backward(650)
+	penup()
+	home()
+	
+	#finish line
+	pencolor("black")
+	pensize(83)
+	begin_fill()
+	left(90)
+	forward(700)
+	backward(20)
+	left(270)
+	pendown()
+	forward(500)
+	penup()
+	backward(500)
+	pendown()
+	backward(500)
+	penup()
+	home()
+	left(90)
+	forward(630)
+	left(90)
+	forward(115)
+	pencolor("white")
+	
+	write("FINISH",font=("bold",20,"bold"))
+	win=Label(fg="white",bg="black",height=2,width=9)
+	win.place(x=520,y=1344)
+	
+	#button line
+	home()
+	pencolor("black")
+	pensize(112)
+	left(270)
+	forward(668)
+	left(270)
+	pendown()
+	forward(600)
+	penup()
+	backward(600)
+	pendown()
+	backward(600)
+	penup()
+	
+	#player1
+	p1=Turtle()
+	p1.color("green")
+	p1.shapesize(5)
+	p1.shape("turtle")
+	
+	p1.penup()
+	p1.left(270)
+	p1.forward(500)
+	p1.left(180)
+	
+	#player2
+	p2=Turtle()
+	p2.color("red")
+	p2.shapesize(5)
+	p2.shape("turtle")
+	
+	p2.penup()
+	p2.left(360)
+	p2.forward(250)
+	p2.left(270)
+	p2.forward(500)
+	p2.left(180)
+	
+	#player3
+	p3=Turtle()
+	p3.color("orange")
+	p3.shapesize(5)
+	p3.shape("turtle")
+	
+	p3.penup()
+	p3.left(180)
+	p3.forward(250)
+	p3.left(90)
+	p3.forward(500)
+	p3.left(180)
+	
+	#up button
+	def move_player():
+		p1.forward(24)
+		
+	up=Button(image=img,activebackground="yellow",bd=0,command=move_player)
+	
+	up.place(x=319,y=1340)
+		
+	#reset button
+	def reset_game():
+		p1.home()
+		p2.home()
+		p3.home()
+		
+		p1.penup()
+		p1.left(270)
+		p1.forward(500)
+		p1.left(180)
+		
+		p2.left(360)
+		p2.forward(250)
+		p2.left(270)
+		p2.forward(500)
+		p2.left(180)
+		
+		p3.left(180)
+		p3.forward(250)
+		p3.left(90)
+		p3.forward(500)
+		p3.left(180)
+
+		for j in range(100):
+			p2.forward(randint(1,20))
+			p3.forward(randint(1,20))
+			
+		if p2.ycor()>p1.ycor() and p2.ycor()>p3.ycor():
+			win.config(text="Turtle-3\nWin",font=("bold",9,"bold"),fg="yellow",bg="black")
+			
+		if p1.ycor()>p3.ycor() and p1.ycor()>p2.ycor():
+			win.config(text="You Win",font=("bold",9,"bold"),fg="yellow",bg="black")
+			
+		if p3.ycor()>p1.ycor() and p3.ycor()>p2.ycor():
+			win.config(text="Turtle-1\nWin",font=("bold",9,"bold"),fg="yellow",bg="black")
+		
+	reset=Button(text="RESET",font=("bold",6,"bold"),fg="black",bg="orange",activebackground="green",activeforeground="white",command=reset_game)
+	
+	reset.place(x=40,y=1340)
+	
+	#Turtle color change button
+	
+	option=["red","green","orange"]
+	
+	def color():
+		if Cc.get()=="red":
+			p1.color("red")
+			p2.color("green")
+			p3.color("orange")
+		if Cc.get()=="orange":
+			p1.color("orange")
+			p2.color("red")
+			p3.color("green")
+		if Cc.get()=="green":
+			p1.color("green")
+			p2.color("red")
+			p3.color("orange")
+		
+	Cc=Spinbox(text="T-Color",font=("bold",6,"bold"),width=10,value=option,command=color)
+	Cc.place(x=420,y=1396)
+	
+	#exit button
+	def exit_button():
+		bye()
+	
+	exit=Button(text="EXIT",font=("bold",6,"bold"),fg="black",bg="red",width=13,activebackground="green",activeforeground="white",command=exit_button)
+	
+	exit.place(x=40,y=1388)
+	
+	#start button
+	def start():
+		for v in range(100):
+			p2.forward(randint(1,15))
+			p3.forward(randint(1,15))
+		
+	start_button=Button(text="START",font=("bold",6,"bold"),fg="black",bg="green",activebackground="green",activeforeground="white",width=3,command=start)
+	start_button.place(x=180,y=1340)
+	
+	#stop button
+	def stop_button():
+		done()
+		
+	stop=Button(text="STOP",font=("bold",6,"bold"),fg="black",bg="red",activebackground="green",activeforeground="white",width=3,command=stop_button)
+	stop.place(x=420,y=1340)
+	
+	for i in range(100):
+		p2.forward(randint(1,20))
+		p3.forward(randint(1,20))
+#win label
+	
+	if p2.ycor()>p1.ycor() and p2.ycor()>p3.ycor():
+		win.config(text="Turtle-3\nWin",font=("bold",9,"bold"),fg="yellow",bg="black")
+		
+	if p1.ycor()>p3.ycor() and p1.ycor()>p2.ycor():
+		win.config(text="You Win",font=("bold",9,"bold"),fg="yellow",bg="black")
+		
+	if p3.ycor()>p1.ycor() and p3.ycor()>p2.ycor():
+		win.config(text="Turtle-1\nWin",font=("bold",9,"bold"),fg="yellow",bg="black")
+	
+start_menu=Button(text="START",font=("bold",15,"bold"),fg="yellow",bg="black",command=start_game)
+
+start_menu.place(x=240,y=450)
+
+mainloop()
